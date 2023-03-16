@@ -27,6 +27,7 @@
 3. Go to the *root* of the project and run the command `$ make up` in the terminal. This command will start the script that will create the local environment and all the necessary functionalities to run the service.
 4. To stop, just run the command `$ make down`.
 
-## Collection Postman 
+## Database User Wallet  
 
->Note: Collection is located at the root of the OrderBook-Collection project as OrderBook-Collection.postman_collection.json.
+* It was created by default 10 user wallets with sequential IDs.
+
