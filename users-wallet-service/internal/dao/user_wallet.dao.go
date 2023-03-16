@@ -15,6 +15,8 @@ type UserWalletDao struct {
 }
 
 type IUserWalletDao interface {
+	SaveUserWallet(userWallet *model.UserWallet) error
+	GetUserWalletByUserIdAndProductType(userId string, productType string) (*model.UserWallet, error)
 }
 
 func NewIUserWalletDao(dynamoClient *dynamodb.Client) *UserWalletDao {

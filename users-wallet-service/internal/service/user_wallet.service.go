@@ -8,7 +8,7 @@ import (
 )
 
 type UserWalletService struct {
-	userWalletDao *dao.UserWalletDao
+	userWalletDao dao.IUserWalletDao
 }
 
 type IUserWalletService interface {
@@ -17,7 +17,7 @@ type IUserWalletService interface {
 	GetUserWalletByUserIdAndProductType(userId string, productType string) (*model.UserWallet, error)
 }
 
-func NewUserWalletService(userWalletDao *dao.UserWalletDao) *UserWalletService {
+func NewUserWalletService(userWalletDao dao.IUserWalletDao) *UserWalletService {
 	return &UserWalletService{
 		userWalletDao: userWalletDao,
 	}
