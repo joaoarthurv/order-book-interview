@@ -6,7 +6,7 @@ services:
   orders-management-service:
     container_name: orders-management
     build:
-      context: /Users/joao.vale/go/src/gitlab.com/projetos/orderbook/orders-management-service
+      context: $ABSOLUTE_PATH/orderbook/orders-management-service
       dockerfile: ./build/package/docker/Dockerfile
     ports:
       - "8080:8080"
@@ -54,7 +54,7 @@ services:
   users-wallet-service:
     container_name: users-wallet-service
     build:
-      context: /Users/joao.vale/go/src/gitlab.com/projetos/orderbook/users-wallet-service
+      context: $ABSOLUTE_PATH/orderbook/users-wallet-service
       dockerfile: ./build/package/docker/Dockerfile
     ports:
       - "8082:8082"
