@@ -17,6 +17,10 @@ type UsersWalletClient struct {
 	client *resty.Client
 }
 
+type IUsersWalletClient interface {
+	UserWalletCheck(userWalletCheck model.UserWallet, path string) (bool, error)
+}
+
 func NewUsersWalletClient(client *resty.Client) *UsersWalletClient {
 	return &UsersWalletClient{
 		client: client,

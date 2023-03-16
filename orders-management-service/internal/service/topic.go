@@ -14,7 +14,7 @@ type TopicService struct {
 }
 
 type ITopicService interface {
-	SendEvents(orderExecuted model.OrderExecutedBody) error
+	SendEvents(orderExecuted *model.OrderExecutedBody) error
 }
 
 func NewTopicService(iTopicClient utils.ITopicClient, topicArn string) *TopicService {

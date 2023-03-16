@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 	"gitlab.com/projetos/orderbook/orders-management-service/internal/client"
 	"gitlab.com/projetos/orderbook/orders-management-service/internal/dao"
@@ -13,17 +12,17 @@ import (
 )
 
 type OrdersService struct {
-	ordersDao        *dao.OrdersDao
-	topicService     *TopicService
-	userWalletClient *client.UsersWalletClient
+	ordersDao        dao.IOrdersDao
+	topicService     ITopicService
+	userWalletClient client.IUsersWalletClient
 }
 
 type IOrdersService interface {
-	PlaceBuyOrder(ctx context.Context) error
-	PlaceSellOrder(ctx echo.Context) error
+	PlaceBuyOrder(ctx context.Context, orderRequest *model.OrdersDataRow) error
+	PlaceSellOrder(ctx context.Context, orderRequest *model.OrdersDataRow) error
 }
 
-func NewOrdersService(ordersDao *dao.OrdersDao, topicService *TopicService, userWalletClient *client.UsersWalletClient) *OrdersService {
+func NewOrdersService(ordersDao dao.IOrdersDao, topicService ITopicService, userWalletClient client.IUsersWalletClient) *OrdersService {
 	return &OrdersService{
 		ordersDao:        ordersDao,
 		topicService:     topicService,
