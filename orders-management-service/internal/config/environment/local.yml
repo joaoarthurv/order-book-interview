@@ -1,0 +1,19 @@
+server:
+  host:
+    port: "8080"
+postgres:
+  host: postgres-orders-db
+  port: 5432
+  username: postgres
+  password: 123
+  database: orders-store
+  conn:
+    min: 5
+    max: 20
+    lifetime: 120s
+    idletime: 120s
+amazon:
+  region: us-east-1
+  endpoint: http://local-stack-order-book:4566
+  snsUrl: http://local-stack-order-book:4566/000000000000/LOCAL_ORDERS_EXECUTED
+  snsArn: arn:aws:sns:us-east-1:000000000000:LOCAL_ORDERS_EXECUTED

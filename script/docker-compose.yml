@@ -1,0 +1,67 @@
+version: '3.1'
+networks:
+  service-network:
+    driver: bridge
+services:
+  orders-management-service:
+    container_name: orders-management
+    build:
+      context: /Users/joao.vale/go/src/gitlab.com/projetos/orderbook/orders-management-service
+      dockerfile: ./build/package/docker/Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - service-network
+    environment:
+      AWS_ACCESS_KEY_ID: foo
+      AWS_SECRET_ACCESS_KEY: foo
+    depends_on:
+      postgres-orders:
+        condition: service_healthy
+  local-stack:
+    container_name: local-stack-order-book
+    image: "localstack/localstack:0.14.3"
+    ports:
+      - "4566:4566"
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - EDGE_PORT=4566
+      - AWS_CBOR_DISABLE=true
+      - SERVICES=sns,sqs,dynamodb
+    volumes:
+      - ./local_stack.sh:/docker-entrypoint-initaws.d/local_stack.sh
+    networks:
+      - service-network
+  postgres-orders:
+    container_name: postgres-orders-db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: orders-store
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./initial_table.sql:/docker-entrypoint-initdb.d/initial_table.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - service-network
+  users-wallet-service:
+    container_name: users-wallet-service
+    build:
+      context: /Users/joao.vale/go/src/gitlab.com/projetos/orderbook/users-wallet-service
+      dockerfile: ./build/package/docker/Dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - service-network
+    environment:
+      AWS_ACCESS_KEY_ID: foo
+      AWS_SECRET_ACCESS_KEY: foo
+    depends_on:
+      - local-stack

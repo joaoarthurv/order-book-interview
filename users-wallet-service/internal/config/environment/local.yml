@@ -1,0 +1,7 @@
+server:
+  host:
+    port: "8082"
+amazon:
+  region: us-east-1
+  endpoint: http://local-stack-order-book:4566
+  sqsUrl: http://local-stack-order-book:4566/000000000000/ORDERS-EXECUTED-TO-WALLET
